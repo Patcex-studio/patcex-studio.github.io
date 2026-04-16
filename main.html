@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patcex Studio — Patching Reality</title>
+    <meta name="description" content="Patcex Studio — Patching reality with neuromorphic AI, Rust, and chaos.">
+    <meta property="og:title" content="Patcex Studio">
+    <meta property="og:description" content="We don't write code. We patch reality.">
+    <meta property="og:image" content="https://patcex.studio/og-image.png">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --accent-laser: #ff0088;
+            --accent-neon: #00ffcc;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --gradient-main: linear-gradient(135deg, #4a00e0, #8e2de2);
+            --card-bg: rgba(30, 30, 40, 0.7);
+            --border-neon: 1px solid var(--accent-neon);
+            --orbit1-radius: 150px;
+            --orbit2-radius: 225px;
+            --orbit3-radius: 275px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Atomic model */
+        .atom-container {
+            position: absolute;
+            top: 46%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            perspective: 1000px;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .nucleus {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-laser), var(--accent-neon));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 10;
+            text-align: center;
+            will-change: transform;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        @keyframes lineGlow {
+            0%, 100% { opacity: 0.6; box-shadow: 0 0 12px #ff0088, 0 0 20px rgba(255, 0, 136, 0.5); }
+            50% { opacity: 1; box-shadow: 0 0 20px #ff0088, 0 0 40px rgba(255, 0, 136, 0.8); }
+        }
+
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(0, 255, 204, 0.15);
+            border-radius: 50%;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .orbit-1 {
+            width: calc(var(--orbit1-radius) * 2);
+            height: calc(var(--orbit1-radius) * 2);
+            margin: calc(var(--orbit1-radius) * -1) 0 0 calc(var(--orbit1-radius) * -1);
+            transform: rotateX(75deg) rotateZ(0deg);
+            animation: rotateOrbit 20s linear infinite;
+        }
+
+        .orbit-2 {
+            width: calc(var(--orbit2-radius) * 2);
+            height: calc(var(--orbit2-radius) * 2);
+            margin: calc(var(--orbit2-radius) * -1) 0 0 calc(var(--orbit2-radius) * -1);
+            transform: rotateX(75deg) rotateZ(60deg);
+            animation: rotateOrbit 30s linear infinite reverse;
+        }
+
+        .orbit-3 {
+            width: calc(var(--orbit3-radius) * 2);
+            height: calc(var(--orbit3-radius) * 2);
+            margin: calc(var(--orbit3-radius) * -1) 0 0 calc(var(--orbit3-radius) * -1);
+            transform: rotateX(75deg) rotateZ(120deg);
+            animation: rotateOrbit 25s linear infinite;
+        }
+
+        @keyframes rotateOrbit {
+            from { transform: rotateX(75deg) rotateZ(0deg); }
+            to { transform: rotateX(75deg) rotateZ(360deg); }
+        }
+
+        .electron {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-neon), 0 0 20px var(--accent-neon);
+            top: 50%;
+            left: 0;
+            margin-top: -4px;
+            transform-origin: 50% 50%;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            will-change: transform;
+        }
+
+        .electron::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-neon) 0%, transparent 70%);
+            animation: trail 0.5s ease-out infinite;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes trail {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .atom-container:hover .electron {
+            animation-play-state: paused;
+            box-shadow: 0 0 20px var(--accent-laser), 0 0 40px var(--accent-laser);
+        }
+
+        .atom-container:hover .orbit {
+            border-color: rgba(255, 0, 136, 0.25);
+        }
+
+        .orbit-1 .electron:nth-child(1) { animation: orbit3d 3s linear infinite; }
+        .orbit-1 .electron:nth-child(2) { animation: orbit3d 3s linear infinite 0.5s; }
+        .orbit-2 .electron { animation: orbit3d-2 5s linear infinite; }
+        .orbit-3 .electron:nth-child(1) { animation: orbit3d-3 4s linear infinite; }
+        .orbit-3 .electron:nth-child(2) { animation: orbit3d-3 4s linear infinite 1s; }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(var(--orbit1-radius)) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(var(--orbit1-radius)) rotate(-360deg); }
+        }
+
+        @keyframes orbit2 {
+            from { transform: rotate(0deg) translateX(var(--orbit2-radius)) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(var(--orbit2-radius)) rotate(-360deg); }
+        }
+
+        @keyframes orbit3 {
+            from { transform: rotate(0deg) translateX(var(--orbit3-radius)) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(var(--orbit3-radius)) rotate(-360deg); }
+        }
+
+        @keyframes orbit3d {
+            from { transform: rotateX(75deg) rotateZ(0deg) translateX(var(--orbit1-radius)) rotateZ(0deg); }
+            to { transform: rotateX(75deg) rotateZ(360deg) translateX(var(--orbit1-radius)) rotateZ(-360deg); }
+        }
+
+        @keyframes orbit3d-2 {
+            from { transform: rotateX(75deg) rotateZ(0deg) translateX(var(--orbit2-radius)) rotateZ(0deg); }
+            to { transform: rotateX(75deg) rotateZ(360deg) translateX(var(--orbit2-radius)) rotateZ(-360deg); }
+        }
+
+        @keyframes orbit3d-3 {
+            from { transform: rotateX(75deg) rotateZ(0deg) translateX(var(--orbit3-radius)) rotateZ(0deg); }
+            to { transform: rotateX(75deg) rotateZ(360deg) translateX(var(--orbit3-radius)) rotateZ(-360deg); }
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--accent-laser), var(--accent-neon));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 136, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h1::before {
+            content: '';
+            position: absolute;
+            bottom: 0.4em;
+            left: 1em;
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff0088, transparent);
+            transform: rotate(-25deg);
+            box-shadow: 0 0 12px #ff0088, 0 0 20px rgba(255, 0, 136, 0.5);
+            z-index: -1;
+            animation: lineGlow 2s infinite alternate;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: var(--border-neon);
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 204, 0.1);
+            box-shadow: 0 0 20px var(--accent-neon);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--accent-neon);
+            outline-offset: 4px;
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--gradient-main);
+            margin: 0.5rem auto;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(142, 45, 226, 0.3);
+            border-color: var(--accent-neon);
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-laser);
+        }
+
+        .project-card:hover h3 {
+            text-shadow: 0 0 10px #ff0088;
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card ul li {
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover ul li {
+            color: #fff;
+        }
+
+        .project-card a {
+            color: var(--accent-neon);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .project-card a:hover {
+            text-decoration: underline;
+        }
+
+        .project-card a:focus {
+            outline: 1px solid var(--accent-neon);
+            outline-offset: 2px;
+        }
+
+        /* Philosophy Section */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .philosophy-block h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-neon);
+        }
+
+        .philosophy-block p {
+            color: var(--text-secondary);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--accent-laser);
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Hive Mind Teaser */
+        .teaser-container {
+            background: radial-gradient(circle at center, #2a003b 0%, #000000 70%);
+            border: var(--border-neon);
+            border-radius: 15px;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 0, 136, 0.1);
+            overflow: hidden;
+        }
+
+        .teaser-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .teaser-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .teaser-container h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-laser);
+        }
+
+        .teaser-container p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+        }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            color: #ff0088;
+            font-weight: bold;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .contact-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-neon);
+        }
+
+        .contact-item p {
+            color: var(--text-secondary);
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--accent-laser);
+            margin-top: 1rem;
+        }
+
+        /* Terminal Effect */
+        .terminal-effect {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: #00ffcc;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        @keyframes blink { 
+            50% { opacity: 0; } 
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+        }
+
+        .heart {
+            color: var(--accent-laser);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --orbit1-radius: 75px;
+                --orbit2-radius: 112px;
+                --orbit3-radius: 137px;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-content {
+                pointer-events: auto;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .nucleus {
+                font-size: 2.5rem;
+                z-index: 5;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .teaser-container h2 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .atom-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            @keyframes orbit {
+                from { transform: rotate(0deg) translateX(75px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(75px) rotate(-360deg); }
+            }
+
+            @keyframes orbit2 {
+                from { transform: rotate(0deg) translateX(112px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(112px) rotate(-360deg); }
+            }
+
+            @keyframes orbit3 {
+                from { transform: rotate(0deg) translateX(137px) rotate(0deg); }
+                to { transform: rotate(360deg) translateX(137px) rotate(-360deg); }
+            }
+
+            @keyframes orbit3d {
+                from { transform: rotateX(75deg) rotateZ(0deg) translateX(75px) rotateZ(0deg); }
+                to { transform: rotateX(75deg) rotateZ(360deg) translateX(75px) rotateZ(-360deg); }
+            }
+
+            @keyframes orbit3d-2 {
+                from { transform: rotateX(75deg) rotateZ(0deg) translateX(112px) rotateZ(0deg); }
+                to { transform: rotateX(75deg) rotateZ(360deg) translateX(112px) rotateZ(-360deg); }
+            }
+
+            @keyframes orbit3d-3 {
+                from { transform: rotateX(75deg) rotateZ(0deg) translateX(137px) rotateZ(0deg); }
+                to { transform: rotateX(75deg) rotateZ(360deg) translateX(137px) rotateZ(-360deg); }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .teaser-container {
+                padding: 2rem 1rem;
+            }
+        }
+        
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .orbit, .electron, .nucleus {
+                animation: none !important;
+                transition: none !important;
+            }
+            .atom-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="atom-container" role="img" aria-label="Atomic model: PATCEX nucleus with rotating electrons">
+            <!-- Orbits with electrons -->
+            <div class="orbit orbit-1">
+                <div class="electron"></div>
+                <div class="electron"></div>
+            </div>
+            <div class="orbit orbit-2">
+                <div class="electron"></div>
+            </div>
+            <div class="orbit orbit-3">
+                <div class="electron"></div>
+                <div class="electron"></div>
+            </div>
+            
+            <!-- Nucleus -->
+            <div class="nucleus">PATCEX</div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>PATCEX STUDIO</h1>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Our Arsenal</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>⚡ Fluxation</h3>
+                    <p>Neuromorphic architecture in Rust</p>
+                    <ul>
+                        <li>Event-driven agents</li>
+                        <li>Self-organizing topology</li>
+                        <li>Built for edge devices</li>
+                    </ul>
+                    <a href="https://github.com/Patcex-studio/Fluxation" target="_blank" rel="noopener noreferrer">GitHub Link</a>
+                </div>
+                <div class="project-card">
+                    <h3>🔮 Project HiveMind</h3>
+                    <p>Classified — Coming Soon</p>
+                    <ul>
+                        <li>Something alive is growing...</li>
+                        <li>It sleeps. It feels. It evolves.</li>
+                    </ul>
+                    <a href="mailto:patcex@proton.me?subject=Notify me about HiveMind">Notify Me</a>
+                </div>
+                <div class="project-card">
+                    <h3>🛠️ Tools & Scripts</h3>
+                    <p>Automation & Utilities</p>
+                    <ul>
+                        <li>Python • Bash • Shell</li>
+                        <li>Making life easier, one patch at a time</li>
+                    </ul>
+                    <a href="https://github.com/Patcex-studio" target="_blank" rel="noopener noreferrer">GitHub Link</a>
+                </div>
+                <div class="project-card">
+                    <h3>🧪 Experiments</h3>
+                    <p>Research & Prototypes</p>
+                    <ul>
+                        <li>Quantum lattices</li>
+                        <li>Synapse visualization</li>
+                    </ul>
+                    <a href="https://github.com/Patcex-studio" target="_blank" rel="noopener noreferrer">GitHub Link</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy">
+        <div class="container">
+            <h2 class="section-title">Why We Do This</h2>
+            <div class="philosophy-grid">
+                <div class="philosophy-block">
+                    <h3>🌌 Black Hole Principle</h3>
+                    <p>“Everything begins at singularity. Idea → Code → Reality”</p>
+                </div>
+                <div class="philosophy-block">
+                    <h3>❤️ Love for Code</h3>
+                    <p>“We don't just solve problems. We love the process”</p>
+                </div>
+                <div class="philosophy-block">
+                    <h3>⚡ Chaos & Order</h3>
+                    <p>“Order is born from chaos. Spikes → Structure → Intelligence”</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats">
+        <div class="container">
+            <h2 class="section-title">By The Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>14,389</h3>
+                    <p>lines of Rust (Fluxation)</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Open Core</p>
+                </div>
+                <div class="stat-item">
+                    <h3>∞</h3>
+                    <p>hearts invested</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1</h3>
+                    <p>reality patched (so far)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hive Mind Teaser -->
+    <section id="teaser">
+        <div class="container">
+            <div class="teaser-container">
+                <div class="teaser-content">
+                    <h2>Something Is Coming...</h2>
+                    <p>A digital organism is growing in our lab.</p>
+                    <p>It's not ready to launch yet.<br>But when it wakes...</p>
+                    <button class="btn" onclick="location.href='mailto:patcex@proton.me?subject=Notify me about HiveMind'">Subscribe for updates</button>
+                    <p class="glitch-text">CLASSIFIED</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Join The Chaos</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h3>📧 Email</h3>
+                    <p><a href="mailto:patcex@proton.me">patcex@proton.me</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>🐦 Twitter</h3>
+                    <p><a href="https://twitter.com/PatcexOps" target="_blank" rel="noopener noreferrer">@PatcexOps</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>🌐 GitHub</h3>
+                    <p><a href="https://github.com/Patcex-studio" target="_blank" rel="noopener noreferrer">github.com/Patcex-studio</a></p>
+                </div>
+            </div>
+            <p class="quote">"We don't write code. We patch reality."</p>
+        </div>
+    </section>
+
+    <!-- Terminal Effect -->
+    <div class="terminal-effect">
+        &gt; root@patcex:~$ ./make_love_to_code.sh<br>
+        &gt; Patching reality... <span class="cursor">█</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Patcex Studio</p>
+            <p>Built with <span class="heart">❤️</span>, chaos, and caffeine</p>
+            <p>"PATCE <3 STUDIO"</p>
+        </div>
+    </footer>
+
+    <script>
+        // Console Easter Egg
+        console.log("%c PATCEX STUDIO ", "background: #ff0088; color: #fff; font-size: 20px;");
+        console.log("%c We don't write code. We patch reality. ", "color: #00ffcc;");
+        console.log("👉 Check out our projects: https://github.com/Patcex-studio");
+
+        // Scroll to section helper
+        window.scrollToSection = (selector) => {
+            const targetElement = document.querySelector(selector);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        };
+    </script>
+</body>
+</html>
